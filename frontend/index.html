@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Digital Map - Mockup</title>
+    <link rel="stylesheet" href="src/css/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#inicio" data-view="landing" aria-label="Ir al inicio">
+        <span class="brand-logo">Logo</span>
+        <span>
+          <strong>Nombre</strong>
+          <small>Lorem ipsum</small>
+        </span>
+      </a>
+
+      <nav class="nav" aria-label="Navegación principal">
+        <button class="nav-link" type="button" data-view="inicio-app">Inicio</button>
+        <button class="nav-link" type="button" data-view="mapa">Explorar mapa</button>
+        <button class="nav-link" type="button" data-view="bitacora">Mi bitácora</button>
+        <button class="nav-link" type="button" data-view="guardados">Guardados</button>
+        <button class="nav-link" type="button" data-view="emergencia">Números de emergencia</button>
+        <button class="nav-link" type="button" data-view="configuracion">Configuración</button>
+      </nav>
+
+      <button class="profile-button" type="button">Perfil</button>
+    </header>
+
+    <main>
+      <section class="view landing-view is-visible" id="inicio" data-panel="landing">
+        <div class="landing-frame">
+          <div class="hero-copy">
+            <p class="eyebrow">Inicio</p>
+            <h1>Explora lugares, rutas y experiencias cercanas</h1>
+            <p>
+              Espacio principal para presentar la idea de la aplicación antes de entrar al
+              panel. Esta parte queda como estructura base del landing.
+            </p>
+            <div class="hero-actions">
+              <button class="primary-action" type="button" data-view="inicio-app">Comenzar</button>
+              <button class="secondary-action" type="button" data-view="acerca">Acerca de</button>
+            </div>
+          </div>
+
+          <div class="hero-visual" aria-label="Mockup visual de mapa natural">
+            <div class="mountain mountain-left"></div>
+            <div class="mountain mountain-center"></div>
+            <div class="mountain mountain-right"></div>
+            <div class="trail trail-one"></div>
+            <div class="trail trail-two"></div>
+            <div class="floating-label label-one">Pinos</div>
+            <div class="floating-label label-two">Río</div>
+            <div class="floating-label label-three">Sendero</div>
+          </div>
+        </div>
+
+        <div class="frontend-placeholders" aria-label="Secciones mockup de frontend">
+          <article>
+            <span></span>
+            <h2>Acerca de</h2>
+            <p>Bloque para explicar el objetivo de la app.</p>
+          </article>
+          <article>
+            <span></span>
+            <h2>Experiencias</h2>
+            <p>Tarjetas o contenido destacado pendiente.</p>
+          </article>
+          <article>
+            <span></span>
+            <h2>Comunidad</h2>
+            <p>Espacio para novedades, rutas o recomendaciones.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="view dashboard-view" data-panel="inicio-app">
+        <div class="dashboard-header">
+          <div>
+            <p class="eyebrow">Inicio</p>
+            <h1>Buenas noches, Rebeca</h1>
+          </div>
+          <button class="outline-button" type="button">Ver perfil</button>
+        </div>
+
+        <section class="content-section">
+          <div class="section-heading">
+            <h2>Recomendaciones para ti</h2>
+            <button class="text-button" type="button">Ver todo</button>
+          </div>
+          <div class="recommendation-grid">
+            <article class="place-card">
+              <div class="image-placeholder"></div>
+              <span class="tag">Categoría</span>
+              <h3 class="stamp-label">Nombre lugar</h3>
+              <p>Descripción breve del lugar recomendado.</p>
+              <small>Lugar · Distancia de ti</small>
+            </article>
+            <article class="place-card">
+              <div class="image-placeholder"></div>
+              <span class="tag">Categoría</span>
+              <h3 class="stamp-label">Nombre lugar</h3>
+              <p>Descripción breve del lugar recomendado.</p>
+              <small>Lugar · Distancia de ti</small>
+            </article>
+            <article class="place-card">
+              <div class="image-placeholder"></div>
+              <span class="tag">Categoría</span>
+              <h3 class="stamp-label">Nombre lugar</h3>
+              <p>Descripción breve del lugar recomendado.</p>
+              <small>Lugar · Distancia de ti</small>
+            </article>
+          </div>
+        </section>
+
+        <div class="dashboard-grid">
+          <section class="content-section achievements">
+            <div class="section-heading">
+              <h2>Tus logros</h2>
+              <button class="text-button" type="button">Ver todo</button>
+            </div>
+            <div class="stats-row">
+              <div>
+                <strong>00</strong>
+                <span>Lugares visitados</span>
+              </div>
+              <div>
+                <strong>00</strong>
+                <span>Departamentos explorados</span>
+              </div>
+              <div>
+                <strong>00</strong>
+                <span>Fotos tomadas</span>
+              </div>
+              <div>
+                <strong>00</strong>
+                <span>Rutas completadas</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="content-section ai-panel">
+            <h2>La IA aprendió de tus gustos</h2>
+            <p>Resumen mockup con líneas de contenido personalizado según intereses.</p>
+            <div class="lines">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <button class="outline-button" type="button">Visualizarlo en el mapa</button>
+          </section>
+        </div>
+
+        <aside class="news-panel">
+          <div class="section-heading">
+            <h2>Novedades</h2>
+            <button class="text-button" type="button">Ver todo</button>
+          </div>
+          <div class="news-list">
+            <article>
+              <div class="thumb"></div>
+              <p>Mensaje, descripción, hace cuanto.</p>
+            </article>
+            <article>
+              <div class="thumb"></div>
+              <p>Mensaje, descripción, hace cuanto.</p>
+            </article>
+            <article>
+              <div class="thumb"></div>
+              <p>Mensaje, descripción, hace cuanto.</p>
+            </article>
+          </div>
+        </aside>
+      </section>
+
+      <section class="view map-view" data-panel="mapa">
+        <div class="map-toolbar">
+          <div>
+            <p class="eyebrow">Explorar mapa</p>
+            <h1>Mapa interactivo</h1>
+          </div>
+          <div class="map-actions">
+            <button class="outline-button" type="button">Filtros</button>
+            <button class="outline-button" type="button">Mi ubicación</button>
+          </div>
+        </div>
+
+        <div class="map-layout">
+          <aside class="map-filter-panel">
+            <h2>Capas</h2>
+            <button type="button">Hoteles</button>
+            <button type="button">Restaurantes</button>
+            <button type="button">Eventos tendencias</button>
+            <button type="button">Volcanes</button>
+            <button type="button">Surf</button>
+            <button type="button">Parques</button>
+            <button type="button">Montañas</button>
+            <button type="button">Playas</button>
+            <button type="button">Cascadas</button>
+            <button type="button">Pueblos mágicos</button>
+            <button type="button">Sitios históricos</button>
+          </aside>
+
+          <section class="map-canvas" aria-label="Mockup de mapa">
+            <div class="map-road road-one"></div>
+            <div class="map-road road-two"></div>
+            <div class="map-road road-three"></div>
+            <div class="map-zone zone-one">Bosque</div>
+            <div class="map-zone zone-two">Mirador</div>
+            <div class="map-zone zone-three">Centro</div>
+            <div class="map-pin pin-one">1</div>
+            <div class="map-pin pin-two">2</div>
+            <div class="map-pin pin-three">3</div>
+          </section>
+
+          <aside class="map-detail-panel">
+            <h2>Lugar seleccionado</h2>
+            <div class="image-placeholder"></div>
+            <h3>Nombre lugar</h3>
+            <p>Descripción breve, categoría, distancia y acciones del mapa.</p>
+            <button class="primary-action" type="button">Guardar</button>
+          </aside>
+        </div>
+
+        <section class="map-recommendations">
+          <div class="map-filter-strip">
+            <h2>Filtros</h2>
+            <div class="filter-chips">
+              <button type="button">Cerca de mí</button>
+              <button type="button">Mejor valorados</button>
+              <button type="button">Abierto ahora</button>
+              <button type="button">Para visitar hoy</button>
+            </div>
+          </div>
+
+          <div class="section-heading">
+            <h2>Recomendaciones para ti</h2>
+            <button class="text-button" type="button">Ver todo</button>
+          </div>
+
+          <div class="recommendation-grid">
+            <article class="place-card">
+              <div class="image-placeholder"></div>
+              <span class="tag">Capa</span>
+              <h3 class="stamp-label">Nombre lugar</h3>
+              <p>Descripción breve del lugar recomendado en el mapa.</p>
+              <small>Lugar · Distancia de ti</small>
+            </article>
+            <article class="place-card">
+              <div class="image-placeholder"></div>
+              <span class="tag">Capa</span>
+              <h3 class="stamp-label">Nombre lugar</h3>
+              <p>Descripción breve del lugar recomendado en el mapa.</p>
+              <small>Lugar · Distancia de ti</small>
+            </article>
+            <article class="place-card">
+              <div class="image-placeholder"></div>
+              <span class="tag">Capa</span>
+              <h3 class="stamp-label">Nombre lugar</h3>
+              <p>Descripción breve del lugar recomendado en el mapa.</p>
+              <small>Lugar · Distancia de ti</small>
+            </article>
+          </div>
+        </section>
+      </section>
+
+      <section class="view simple-view" data-panel="bitacora">
+        <h1>Mi bitácora</h1>
+        <p>Mockup de entradas, recorridos y notas personales.</p>
+      </section>
+
+      <section class="view simple-view" data-panel="guardados">
+        <h1>Guardados</h1>
+        <p>Mockup de lugares favoritos y rutas guardadas.</p>
+      </section>
+
+      <section class="view simple-view" data-panel="emergencia">
+        <h1>Números de emergencia</h1>
+        <p>Mockup de contactos importantes y botones rápidos.</p>
+      </section>
+
+      <section class="view simple-view" data-panel="configuracion">
+        <h1>Configuración</h1>
+        <p>Mockup de preferencias de cuenta, privacidad y notificaciones.</p>
+      </section>
+
+      <section class="view simple-view" data-panel="acerca">
+        <h1>Acerca de</h1>
+        <p>Mockup de información general sobre la plataforma.</p>
+      </section>
+    </main>
+
+    <script src="src/js/script.js"></script>
+  </body>
+</html>

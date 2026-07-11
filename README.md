@@ -1,2 +1,0 @@
-# twinmap
-Pruebas de frontend
