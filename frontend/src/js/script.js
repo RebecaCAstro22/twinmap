@@ -1,4 +1,4 @@
-const MODE_STORAGE_KEY = "twinmap-mode";
+﻿const MODE_STORAGE_KEY = "twinmap-mode";
 const ROUTE_MODE = "ruta";
 const ADVENTURE_MODE = "aventura";
 
@@ -59,12 +59,12 @@ function showView(viewName, options = {}) {
   const savedMode = getSavedMode();
 
   if (isRoutePanel && savedMode !== ROUTE_MODE) {
-    showView("mode-select");
+    showView("landing");
     return;
   }
 
   if (isAdventurePanel && savedMode !== ADVENTURE_MODE) {
-    showView("mode-select");
+    showView("landing");
     return;
   }
 
@@ -141,7 +141,7 @@ function startMode(mode) {
 function returnToModeSelect() {
   setActiveMode(null);
   document.body.classList.remove("is-onboarding");
-  showView("mode-select");
+  showView("landing");
 }
 
 viewButtons.forEach((button) => {
@@ -177,4 +177,5 @@ document.querySelectorAll(".map-search").forEach((form) => {
   });
 });
 
-showView("mode-select");
+showView("landing");
+
