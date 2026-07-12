@@ -3,8 +3,59 @@
  * Carga POIs, multitudes y aves desde el backend Express.
  */
 (function initExplorarMapa(global) {
-  const CFG = global.TWINMAP_CONFIG || {};
-  const API_BASE = (global.TwinmapApi?.API_BASE_URL || CFG.apiBaseUrl || "http://localhost:3001").replace(/\/$/, "");
+  const DEFAULT_API_BASE = (
+    global.TwinmapApi?.API_BASE_URL ||
+    global.TWINMAP_CONFIG?.apiBaseUrl ||
+    "http://localhost:3001"
+  ).replace(/\/$/, "");
+
+  let API_BASE = DEFAULT_API_BASE;
+  let resolvedConfig = null;
+  let configPromise = null;
+
+  async function resolveConfig() {
+    if (configPromise) return configPromise;
+
+    configPromise = (async () => {
+      const local = global.TWINMAP_CONFIG || {};
+      const apiBase = (local.apiBaseUrl || DEFAULT_API_BASE).replace(/\/$/, "");
+      const localToken = local.MAPBOX_TOKEN;
+
+      if (localToken && localToken.startsWith("pk.")) {
+        resolvedConfig = { ...local, apiBaseUrl: apiBase };
+        API_BASE = apiBase;
+        return resolvedConfig;
+      }
+
+      try {
+        const response = await fetch(`${apiBase}/api/config`);
+        if (response.ok) {
+          const remote = await response.json();
+          const remoteToken = remote.mapboxToken;
+          if (remoteToken && remoteToken.startsWith("pk.")) {
+            resolvedConfig = {
+              ...local,
+              MAPBOX_TOKEN: remoteToken,
+              apiBaseUrl: (remote.apiBaseUrl || apiBase).replace(/\/$/, ""),
+              CENTER: local.CENTER || [-89.2, 13.7],
+              ZOOM: local.ZOOM ?? 8,
+            };
+            global.TWINMAP_CONFIG = resolvedConfig;
+            API_BASE = resolvedConfig.apiBaseUrl;
+            return resolvedConfig;
+          }
+        }
+      } catch {
+        // Backend no disponible; se mostrará aviso de token.
+      }
+
+      resolvedConfig = { ...local, apiBaseUrl: apiBase };
+      API_BASE = apiBase;
+      return resolvedConfig;
+    })();
+
+    return configPromise;
+  }
 
   const CAT_COLORS = {
     comida: "#ffbf69",
@@ -586,15 +637,18 @@
     });
   }
 
-  function bootMap() {
+  async function bootMap() {
     if (!containerEl) return;
 
+    const CFG = await resolveConfig();
     const token = CFG.MAPBOX_TOKEN;
     const hasToken = token && token.startsWith("pk.");
 
     if (!hasToken) {
       if (tokenWarnEl) tokenWarnEl.hidden = false;
-      setStatus("Configura MAPBOX_TOKEN en frontend/src/js/config.js");
+      setStatus(
+        "Sin token Mapbox. Copia frontend/src/js/config.example.js → config.js o define MAPBOX_ACCESS_TOKEN en .env del backend."
+      );
       return;
     }
 
@@ -655,7 +709,7 @@
 
   function ensureMap() {
     if (!initialized && !map) {
-      bootMap();
+      void bootMap();
     } else if (map) {
       requestAnimationFrame(() => map.resize());
     }
