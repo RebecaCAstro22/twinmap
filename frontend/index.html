@@ -189,7 +189,7 @@
         <div class="map-toolbar">
           <div>
             <p class="eyebrow">Planeación · Explorar mapa</p>
-            <h1>Mapa interactivo</h1>
+            <h1>TwinMap Digital Twin Turístico</h1>
           </div>
           <div class="map-search map-search--geocoder" id="explorar-geocoder" role="search" aria-label="Buscar lugares en el mapa"></div>
           <div class="map-actions">
@@ -198,8 +198,25 @@
         </div>
 
         <div class="map-layout">
-          <aside class="map-filter-panel map-filter-panel--layers" aria-label="Capas del mapa">
-            <h2>Capas</h2>
+          <aside class="map-filter-panel map-filter-panel--layers">
+            <h2>Capas del gemelo</h2>
+
+            <label class="is-active">
+              <input type="checkbox" data-layer="lyr-3d" checked />
+              <span>
+                <span class="layer-label">Edificios 3D</span>
+                <span class="layer-sub">Extrusión automática</span>
+              </span>
+            </label>
+
+            <label class="is-active">
+              <input type="checkbox" data-layer="lyr-dept" checked />
+              <span>
+                <span class="layer-label">Departamentos</span>
+                <span class="layer-sub">14 divisiones · al alejar</span>
+              </span>
+            </label>
+
             <label class="is-active">
               <input type="checkbox" data-layer="lyr-pois" checked />
               <span>
@@ -207,82 +224,70 @@
                 <span class="layer-sub">OpenStreetMap · El Salvador</span>
               </span>
             </label>
-            <label class="is-active">
-              <input type="checkbox" data-layer="lyr-dept" checked />
-              <span>
-                <span class="layer-label">Departamentos</span>
-                <span class="layer-sub">14 divisiones al alejar</span>
-              </span>
-            </label>
+
             <label>
               <input type="checkbox" data-layer="lyr-crowds" />
               <span>
-                <span class="layer-label">Multitudes</span>
-                <span class="layer-sub" data-layer-sub="crowds">Afluencia estimada (API)</span>
+                <span class="layer-label">Afluencia estimada</span>
+                <span class="layer-sub" data-layer-sub="crowds">SerpAPI · intensidad de gente</span>
               </span>
             </label>
-            <label>
-              <input type="checkbox" data-layer="lyr-birds" />
-              <span>
-                <span class="layer-label">Aves</span>
-                <span class="layer-sub" data-layer-sub="birds">eBird · avistamientos</span>
-              </span>
-            </label>
+
             <label class="is-active">
               <input type="checkbox" data-layer="lyr-traffic" checked />
               <span>
-                <span class="layer-label">Tráfico</span>
-                <span class="layer-sub" data-layer-sub="traffic">Mapbox Traffic</span>
+                <span class="layer-label">Tráfico y congestión</span>
+                <span class="layer-sub" data-layer-sub="traffic">Mapbox Traffic · según cobertura</span>
               </span>
             </label>
+
+            <label>
+              <input type="checkbox" data-layer="lyr-birds" />
+              <span>
+                <span class="layer-label">Biodiversidad</span>
+                <span class="layer-sub" data-layer-sub="birds">eBird · prob. de reavistamiento</span>
+              </span>
+            </label>
+
             <label class="is-active">
               <input type="checkbox" data-layer="lyr-nature" checked />
               <span>
-                <span class="layer-label">Naturaleza</span>
+                <span class="layer-label">Naturaleza de El Salvador</span>
                 <span class="layer-sub" data-layer-sub="nature">Catálogo de referencia</span>
-              </span>
-            </label>
-            <label class="is-active">
-              <input type="checkbox" data-layer="lyr-3d" checked />
-              <span>
-                <span class="layer-label">Edificios 3D</span>
-                <span class="layer-sub">Extrusión al acercar</span>
               </span>
             </label>
           </aside>
 
-          <section class="map-canvas map-canvas--mapbox" id="explorar-map-canvas" aria-label="Mapa interactivo Mapbox">
+          <section class="map-canvas map-canvas--mapbox" aria-label="Mapa Mapbox satélite">
             <div id="explorar-map-container" class="explorar-map-container"></div>
-            <div id="explorar-map-status" class="explorar-map-status" role="status">Cargando mapa…</div>
+            <div id="explorar-map-status" class="explorar-map-status">Cargando mapa…</div>
             <div id="explorar-map-token-warn" class="explorar-map-token-warn" hidden>
-              <div>
-                <h2>Falta tu token de Mapbox</h2>
-                <p>Copia <code>src/js/config.example.js</code> como <code>src/js/config.js</code> y pega tu token público (<code>pk.</code>…).</p>
-              </div>
+              <p>Configura <code>MAPBOX_TOKEN</code> en <code>frontend/src/js/config.js</code></p>
             </div>
           </section>
 
           <aside class="map-detail-panel">
             <h2>Lugar seleccionado</h2>
+            <div class="image-placeholder"></div>
             <h3 id="explorar-detail-title">Explora El Salvador</h3>
-            <p id="explorar-detail-text">Toca un punto de interés en el mapa para ver detalles, clima y añadirlo a tu ruta.</p>
+            <p id="explorar-detail-text">Haz clic en un punto de interés del mapa para ver detalles.</p>
+            <div id="explorar-detail-status" class="map-detail-panel__status">Conectando con la API en localhost:3001…</div>
             <div class="map-detail-panel__legend" aria-hidden="true">
               <span><i style="background:#ffbf69"></i>Comida</span>
               <span><i style="background:#8ecae6"></i>Hospedaje</span>
               <span><i style="background:#06d6a0"></i>Turismo</span>
               <span><i style="background:#e07a5f"></i>Histórico</span>
               <span><i style="background:#48cae4"></i>Playa</span>
+              <span><i style="background:#90be6d"></i>Parque</span>
             </div>
-            <p class="map-detail-panel__status" id="explorar-detail-status">Conectando con API en localhost:3001…</p>
           </aside>
         </div>
 
         <section class="map-recommendations">
           <div class="section-heading">
-            <h2>Lugares destacados</h2>
+            <h2>Recomendaciones para ti</h2>
             <button class="text-button" type="button" data-view="mapa-personalizado">Ver mapa personalizado</button>
           </div>
-
           <div class="recommendation-grid" id="explorar-recommendations"></div>
         </section>
       </section>
@@ -719,7 +724,7 @@
 
     <script src="https://api.mapbox.com/mapbox-gl-js/v3.17.0/mapbox-gl.js"></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.3/mapbox-gl-geocoder.min.js"></script>
-    <script src="src/js/config.js" defer onerror="this.remove()"></script>
+    <script src="src/js/config.js"></script>
     <script src="src/js/api.js"></script>
     <script src="src/js/ink-postmarks.js"></script>
     <script src="src/js/onboarding.js"></script>
@@ -732,8 +737,8 @@
     <script src="src/js/aventura-bitacora.js"></script>
     <script src="src/js/aventura-share.js"></script>
     <script src="src/js/aventura-logros.js"></script>
-    <script src="src/js/mapa-explorar.js"></script>
     <script src="src/js/mapa-personalizado.js"></script>
+    <script src="src/js/mapa-explorar.js"></script>
     <script src="src/js/emergencia-noticias.js"></script>
     <script src="src/js/script.js"></script>
   </body>
