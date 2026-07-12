@@ -59,12 +59,12 @@ function showView(viewName, options = {}) {
   const savedMode = getSavedMode();
 
   if (isRoutePanel && savedMode !== ROUTE_MODE) {
-    showView("landing");
+    showView("mode-select");
     return;
   }
 
   if (isAdventurePanel && savedMode !== ADVENTURE_MODE) {
-    showView("landing");
+    showView("mode-select");
     return;
   }
 
@@ -145,7 +145,7 @@ function startMode(mode) {
 function returnToModeSelect() {
   setActiveMode(null);
   document.body.classList.remove("is-onboarding");
-  showView("landing");
+  showView("mode-select");
 }
 
 viewButtons.forEach((button) => {
@@ -181,5 +181,5 @@ document.querySelectorAll(".map-search").forEach((form) => {
   });
 });
 
-showView("landing");
+showView("mode-select");
 
