@@ -4,8 +4,10 @@
   "installCommand": "",
   "buildCommand": "node scripts/netlify-config.mjs",
   "outputDirectory": ".",
+  "redirects": [
+    { "source": "/", "destination": "/frontend/index.html", "permanent": false }
+  ],
   "rewrites": [
-    { "source": "/", "destination": "/frontend/index.html" },
     { "source": "/frontend", "destination": "/frontend/index.html" },
     { "source": "/frontend/", "destination": "/frontend/index.html" },
     { "source": "/map", "destination": "/index.html" }

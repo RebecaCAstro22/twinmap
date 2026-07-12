@@ -3,11 +3,15 @@
  * Configura window.TWINMAP_API_BASE o frontend/src/js/config.js
  */
 (function initTwinmapApi(global) {
-  const API_BASE_URL = (
+  const configuredApiBase =
     global.TWINMAP_API_BASE ||
     global.TWINMAP_CONFIG?.apiBaseUrl ||
-    "http://localhost:3001"
-  ).replace(/\/$/, "");
+    global.TWINMAP_CONFIG?.API_BASE;
+  const sameOriginApiBase =
+    global.location?.hostname === "localhost"
+      ? "http://localhost:3001"
+      : global.location?.origin || "http://localhost:3001";
+  const API_BASE_URL = (configuredApiBase || sameOriginApiBase).replace(/\/$/, "");
 
   const WMO_LABELS = {
     0: "Despejado",

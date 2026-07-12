@@ -13,6 +13,7 @@ import newsRouter from "./routes/news.js";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 const port = process.env.PORT || 3001;
+const frontendDir = path.join(__dirname, "frontend");
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -46,6 +47,17 @@ app.get("/api/config", (_req, res) => {
     apiBaseUrl: `http://localhost:${port}`,
   });
 });
+
+
+// Railway entrega la aplicación completa desde el mismo proceso Express.
+app.get(["/", "/frontend", "/frontend/"], (_req, res) => {
+  res.sendFile(path.join(frontendDir, "index.html"));
+});
+app.get(["/map", "/index.html"], (_req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
+});
+app.use(express.static(frontendDir, { index: false }));
+app.use(express.static(__dirname, { index: false }));
 
 app.listen(port, () => {
   console.log(`Mirus API escuchando en http://localhost:${port}`);

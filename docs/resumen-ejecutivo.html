@@ -1,0 +1,712 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mirus (TwinMap) — Resumen ejecutivo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --ocean: #0d4f6e;
+        --ocean-light: #1a7a9e;
+        --teal: #0f766e;
+        --sand: #f5f0e8;
+        --cream: #faf8f4;
+        --ink: #1a2332;
+        --muted: #5c6570;
+        --border: #dde3ea;
+        --accent: #e07a3a;
+        --accent-soft: #fef3eb;
+        --success: #15803d;
+        --success-bg: #ecfdf3;
+        --pending: #b45309;
+        --pending-bg: #fffbeb;
+        --card-shadow: 0 1px 3px rgba(13, 79, 110, 0.06), 0 8px 24px rgba(13, 79, 110, 0.08);
+        --radius: 12px;
+      }
+
+      *, *::before, *::after { box-sizing: border-box; }
+
+      html { scroll-behavior: smooth; }
+
+      body {
+        margin: 0;
+        font-family: "DM Sans", system-ui, sans-serif;
+        font-size: 16px;
+        line-height: 1.65;
+        color: var(--ink);
+        background: linear-gradient(165deg, var(--cream) 0%, #eef4f7 45%, var(--sand) 100%);
+        min-height: 100vh;
+      }
+
+      .page {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 2.5rem 1.5rem 4rem;
+      }
+
+      /* Hero */
+      .hero {
+        background: linear-gradient(135deg, var(--ocean) 0%, var(--ocean-light) 55%, var(--teal) 100%);
+        color: #fff;
+        border-radius: calc(var(--radius) + 4px);
+        padding: 2.5rem 2rem 2rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--card-shadow);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 85% 15%, rgba(255,255,255,0.12) 0%, transparent 50%);
+        pointer-events: none;
+      }
+
+      .hero-inner { position: relative; z-index: 1; }
+
+      .hero .eyebrow {
+        display: inline-block;
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        opacity: 0.85;
+        margin-bottom: 0.5rem;
+      }
+
+      .hero h1 {
+        font-family: "DM Serif Display", Georgia, serif;
+        font-size: clamp(1.85rem, 5vw, 2.5rem);
+        font-weight: 400;
+        line-height: 1.15;
+        margin: 0 0 0.75rem;
+      }
+
+      .hero .lead {
+        font-size: 1.05rem;
+        opacity: 0.92;
+        max-width: 38em;
+        margin: 0 0 1.25rem;
+      }
+
+      .hero-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem 1.25rem;
+        font-size: 0.875rem;
+        opacity: 0.9;
+      }
+
+      .hero-meta a { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+
+      .badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 1.25rem;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0.3rem 0.75rem;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        background: rgba(255,255,255,0.18);
+        border: 1px solid rgba(255,255,255,0.25);
+      }
+
+      .badge--live { background: rgba(21,128,61,0.35); border-color: rgba(255,255,255,0.3); }
+
+      /* Sections */
+      section {
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 1.75rem 1.75rem 1.5rem;
+        margin-bottom: 1.25rem;
+        box-shadow: var(--card-shadow);
+      }
+
+      section h2 {
+        font-family: "DM Serif Display", Georgia, serif;
+        font-size: 1.35rem;
+        font-weight: 400;
+        color: var(--ocean);
+        margin: 0 0 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid var(--sand);
+      }
+
+      section h3 {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: var(--teal);
+        margin: 1.25rem 0 0.5rem;
+      }
+
+      section h3:first-of-type { margin-top: 0; }
+
+      p { margin: 0 0 0.85rem; }
+      p:last-child { margin-bottom: 0; }
+
+      ul, ol { margin: 0 0 0.85rem; padding-left: 1.25rem; }
+      li { margin-bottom: 0.4rem; }
+      li:last-child { margin-bottom: 0; }
+
+      strong { font-weight: 600; color: var(--ink); }
+
+      a { color: var(--ocean-light); }
+
+      code {
+        font-family: ui-monospace, "Cascadia Code", monospace;
+        font-size: 0.85em;
+        background: var(--sand);
+        padding: 0.1em 0.4em;
+        border-radius: 4px;
+      }
+
+      /* Architecture diagram */
+      .arch {
+        display: grid;
+        gap: 0.75rem;
+        margin: 1rem 0;
+      }
+
+      .arch-row {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+      }
+
+      @media (min-width: 640px) {
+        .arch-row { grid-template-columns: repeat(3, 1fr); }
+      }
+
+      .arch-box {
+        background: var(--cream);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 1rem;
+        text-align: center;
+      }
+
+      .arch-box .label {
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 0.35rem;
+      }
+
+      .arch-box .title {
+        font-weight: 600;
+        color: var(--ocean);
+        font-size: 0.95rem;
+      }
+
+      .arch-box .desc {
+        font-size: 0.82rem;
+        color: var(--muted);
+        margin-top: 0.35rem;
+        line-height: 1.45;
+      }
+
+      .arch-arrow {
+        text-align: center;
+        color: var(--muted);
+        font-size: 1.25rem;
+        line-height: 1;
+      }
+
+      /* Feature grid */
+      .grid-2 {
+        display: grid;
+        gap: 1rem;
+        margin-top: 0.75rem;
+      }
+
+      @media (min-width: 600px) {
+        .grid-2 { grid-template-columns: 1fr 1fr; }
+      }
+
+      .feature-card {
+        background: var(--cream);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 1rem 1.1rem;
+      }
+
+      .feature-card h4 {
+        margin: 0 0 0.4rem;
+        font-size: 0.9rem;
+        color: var(--ocean);
+      }
+
+      .feature-card p, .feature-card ul {
+        font-size: 0.88rem;
+        color: var(--muted);
+        margin: 0;
+      }
+
+      .feature-card ul { padding-left: 1rem; margin-top: 0.35rem; }
+
+      /* Tables */
+      .table-wrap { overflow-x: auto; margin: 0.75rem 0; }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.88rem;
+      }
+
+      th, td {
+        text-align: left;
+        padding: 0.55rem 0.75rem;
+        border-bottom: 1px solid var(--border);
+      }
+
+      th {
+        background: var(--sand);
+        font-weight: 600;
+        color: var(--ocean);
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+
+      tr:last-child td { border-bottom: none; }
+
+      /* Status lists */
+      .status-list { list-style: none; padding: 0; margin: 0; }
+
+      .status-list li {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.6rem;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid var(--border);
+        font-size: 0.92rem;
+      }
+
+      .status-list li:last-child { border-bottom: none; }
+
+      .dot {
+        flex-shrink: 0;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        margin-top: 0.45rem;
+      }
+
+      .dot--done { background: var(--success); }
+      .dot--partial { background: var(--pending); }
+      .dot--todo { background: var(--border); }
+
+      .highlight-box {
+        background: var(--accent-soft);
+        border-left: 4px solid var(--accent);
+        padding: 1rem 1.15rem;
+        border-radius: 0 8px 8px 0;
+        margin: 1rem 0;
+        font-size: 0.95rem;
+      }
+
+      .highlight-box strong { color: var(--accent); }
+
+      footer {
+        text-align: center;
+        font-size: 0.82rem;
+        color: var(--muted);
+        margin-top: 2rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border);
+      }
+
+      @media print {
+        body { background: #fff; }
+        .hero { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+        section { break-inside: avoid; box-shadow: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header class="hero">
+        <div class="hero-inner">
+          <p class="eyebrow">Hackathon TWINMAP · Julio 2026</p>
+          <h1>Mirus — Gemelo digital turístico de El Salvador</h1>
+          <p class="lead">
+            Plataforma web que unifica mapa interactivo 3D, catálogo oficial MITUR, rutas inteligentes
+            y experiencia personalizada para planificar y explorar destinos nacionales — con caso piloto
+            en Barra de Santiago y cobertura de 104 lugares en 13 departamentos.
+          </p>
+          <div class="hero-meta">
+            <span><strong>Producto:</strong> Mirus</span>
+            <span><strong>Repositorio:</strong> TwinMap</span>
+            <span>
+              <strong>GitHub:</strong>
+              <a href="https://github.com/RebecaCAstro22/twinmap">RebecaCAstro22/twinmap</a>
+            </span>
+            <span>
+              <strong>Demo:</strong>
+              <a href="https://mirus-blue.vercel.app">mirus-blue.vercel.app</a>
+            </span>
+          </div>
+          <div class="badges">
+            <span class="badge badge--live">● Demo en producción</span>
+            <span class="badge">104 destinos MITUR</span>
+            <span class="badge">Mapbox GL 3D</span>
+            <span class="badge">Low twin · sin IoT</span>
+          </div>
+        </div>
+      </header>
+
+      <section id="vision">
+        <h2>Visión</h2>
+        <p>
+          <strong>Mirus</strong> es un gemelo digital turístico de enfoque <em>low twin</em>: combina datos
+          abiertos, cachés geoespaciales y simulación con reglas realistas para ofrecer una experiencia
+          cartográfica rica sin depender de sensores IoT ni modelos de ML entrenados. El mapa es el núcleo
+          obligatorio; encima se superponen capas de diferenciación — afluencia, biodiversidad, tráfico,
+          noticias y rutas personalizadas — que convierten la información fragmentada del turismo salvadoreño
+          en una sola interfaz usable por viajeros, comunidades locales y evaluadores del reto TWINMAP.
+        </p>
+        <div class="highlight-box">
+          <strong>Propuesta de valor:</strong> Convierte las preferencias del viajero en mapa vivo, itinerario
+          editable y ruta lista para recorrer El Salvador, con datos reales cuando el backend está activo
+          y continuidad offline mediante almacenamiento local por perfil.
+        </div>
+      </section>
+
+      <section id="problema">
+        <h2>Problema y solución</h2>
+        <h3>El problema</h3>
+        <p>
+          La información para viajar por El Salvador está dispersa entre mapas genéricos, redes sociales,
+          guías desactualizadas y fuentes institucionales poco integradas. El viajero no dispone de una
+          vista unificada que combine destinos oficiales, contexto ambiental (clima, biodiversidad),
+          afluencia estimada, movilidad local y alertas de seguridad en tiempo casi real.
+        </p>
+        <h3>La solución</h3>
+        <p>
+          Mirus integra dos piezas complementarias en un mismo repositorio: una <strong>aplicación Mirus</strong>
+          (landing, login, cuestionario, bitácora, favoritos, emergencias) y un <strong>gemelo cartográfico Mapbox</strong>
+          con más de una docena de capas activables. La app embebe el mapa vía iframe y sincroniza favoritos
+          y visitas mediante <code>postMessage</code> y almacenamiento compartido por perfil.
+        </p>
+      </section>
+
+      <section id="arquitectura">
+        <h2>Arquitectura</h2>
+        <div class="arch">
+          <div class="arch-row">
+            <div class="arch-box">
+              <div class="label">Capa 1</div>
+              <div class="title">App Mirus</div>
+              <div class="desc">
+                <code>frontend/</code> — login (Google + perfiles locales), modos ruta y aventura,
+                bitácora editable, favoritos, emergencias, mapa personalizado
+              </div>
+            </div>
+            <div class="arch-box">
+              <div class="label">Capa 2</div>
+              <div class="title">Gemelo Mapbox</div>
+              <div class="desc">
+                <code>index.html</code> — mapa 3D, 104 MITUR, heatmap, POIs OSM, sidebar de lugar,
+                rutas, capas por categoría
+              </div>
+            </div>
+            <div class="arch-box">
+              <div class="label">Capa 3</div>
+              <div class="title">API Express</div>
+              <div class="desc">
+                <code>server.js</code> — rutas inteligentes, multitudes, aves, noticias, tráfico,
+                asistente IA, estáticos <code>/data/*</code>
+              </div>
+            </div>
+          </div>
+          <div class="arch-arrow">↕</div>
+          <div class="arch-row">
+            <div class="arch-box">
+              <div class="label">Datos</div>
+              <div class="title">Caché GeoJSON</div>
+              <div class="desc">
+                <code>scripts/*.mjs</code> generan <code>data/*.geojson</code> — MITUR, POIs, GBIF,
+                clima, afluencia, naturaleza, departamentos
+              </div>
+            </div>
+            <div class="arch-box">
+              <div class="label">Libs</div>
+              <div class="title">Módulos compartidos</div>
+              <div class="desc">
+                <code>lib/</code> — place-storage, place-travel-panel, popular-times,
+                profile-sync, smart-routes, category-images
+              </div>
+            </div>
+            <div class="arch-box">
+              <div class="label">Orquestación</div>
+              <div class="title">APIs externas</div>
+              <div class="desc">
+                Mapbox, MITUR, OSM/Overpass, GBIF, eBird, Open-Meteo, SerpAPI, NewsData.io,
+                OpenRouter, n8n (webhook rutas)
+              </div>
+            </div>
+          </div>
+        </div>
+        <p>
+          Flujo de datos: los scripts de Node/Python consultan APIs una vez y materializan GeoJSON estático;
+          el frontend los consume con <code>fetch</code> local para carga rápida. El backend añade señales
+          en vivo (aves, noticias, tráfico, afluencia) con degradación elegante a caché o mocks si falta una llave.
+        </p>
+      </section>
+
+      <section id="funcionalidades">
+        <h2>Funcionalidades implementadas</h2>
+
+        <div class="grid-2">
+          <div class="feature-card">
+            <h4>App Mirus — Modo ruta</h4>
+            <ul>
+              <li>Landing, selección de modo y onboarding (5 preguntas)</li>
+              <li>Login con Google Sign-In y perfiles locales</li>
+              <li>Explorar mapa: iframe del gemelo con capas MITUR + heatmap</li>
+              <li>Mapa personalizado según quiz y catálogo nacional</li>
+              <li>Mi ruta: itinerario editable con cálculo vía API</li>
+              <li>Bitácora y favoritos editables, sincronizados con el mapa</li>
+              <li>Emergencias: 6 contactos oficiales + noticias por zona</li>
+            </ul>
+          </div>
+          <div class="feature-card">
+            <h4>App Mirus — Modo aventura</h4>
+            <ul>
+              <li>Ruta de 5 paradas generada desde el cuestionario</li>
+              <li>Regenerar rutas, rutas locas y sistema de logros</li>
+              <li>Bitácora y favoritos propios del modo</li>
+              <li>Compartir e imprimir itinerario (PDF/impresión)</li>
+            </ul>
+          </div>
+          <div class="feature-card">
+            <h4>Gemelo Mapbox — Capas del mapa</h4>
+            <ul>
+              <li>Base satélite 3D, terreno DEM, edificios extruidos</li>
+              <li>104 destinos MITUR · 13 deptos · 26 categorías</li>
+              <li>POIs OpenStreetMap, naturaleza curada, estacionamiento</li>
+              <li>Heatmap de afluencia (SerpAPI + pesos MITUR)</li>
+              <li>Tráfico Mapbox en vivo, hotspots eBird/GBIF</li>
+              <li>Departamentos, modo isla, calles más finas</li>
+              <li>Toggles independientes por capa y filtros por categoría</li>
+            </ul>
+          </div>
+          <div class="feature-card">
+            <h4>Sidebar de lugar (embed)</h4>
+            <ul>
+              <li>Descripción asistida por IA (OpenRouter)</li>
+              <li>Clima cacheado (Open-Meteo)</li>
+              <li>Enlaces Waze e inDrive para movilidad local</li>
+              <li>Noticias cercanas (NewsData.io + Google Noticias)</li>
+              <li>Añadir a Mi ruta, favoritos y marcar visitado</li>
+              <li>Imágenes por categoría de destino</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3>Backend Express — Endpoints activos</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Endpoint</th>
+                <th>Función</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><code>POST /api/routes/calculate</code></td><td>Ruta simple: n8n → fallback Mapbox Directions</td></tr>
+              <tr><td><code>POST /api/routes/smart</code></td><td>Rutas personalizadas con scoring por perfil</td></tr>
+              <tr><td><code>GET /api/routes/destinations</code></td><td>Destinos por categoría (POI + naturaleza + MITUR)</td></tr>
+              <tr><td><code>GET /api/crowds</code></td><td>Afluencia SerpAPI + caché <code>crowds.geojson</code></td></tr>
+              <tr><td><code>GET /api/birds</code> · <code>/forecast</code></td><td>Avistamientos eBird y pronóstico migratorio</td></tr>
+              <tr><td><code>GET /api/news</code></td><td>Proxy NewsData.io con fallback local</td></tr>
+              <tr><td><code>POST /api/assistant/place-info</code></td><td>Descripción + clima de un lugar (OpenRouter)</td></tr>
+              <tr><td><code>POST /api/assistant/route</code></td><td>Ruta conversacional por mensaje</td></tr>
+              <tr><td><code>GET /api/traffic/*</code></td><td>Tráfico Mapbox en vivo</td></tr>
+              <tr><td><code>GET /data/*</code></td><td>GeoJSON y JSON cacheados (MITUR, clima, biodiversidad…)</td></tr>
+              <tr><td><code>GET /health</code></td><td>Estado del servicio</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="datos">
+        <h2>Fuentes de datos</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Fuente</th>
+                <th>Uso en Mirus</th>
+                <th>Key</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>MITUR</strong></td><td>104 destinos oficiales nacionales (<code>tourism-official.geojson</code>)</td><td>Sin key</td></tr>
+              <tr><td><strong>OpenStreetMap / Overpass</strong></td><td>POIs turísticos locales</td><td>Sin key</td></tr>
+              <tr><td><strong>geoBoundaries</strong></td><td>Límites departamentales y máscara modo isla</td><td>Sin key</td></tr>
+              <tr><td><strong>GBIF</strong></td><td>Registros históricos de biodiversidad</td><td>Sin key</td></tr>
+              <tr><td><strong>eBird API 2.0</strong></td><td>Avistamientos recientes y capa de hotspots</td><td>Gratis</td></tr>
+              <tr><td><strong>Open-Meteo</strong></td><td>Clima y pronóstico cacheado</td><td>Sin key</td></tr>
+              <tr><td><strong>SerpAPI</strong></td><td>Popular Times / señal de afluencia comercial</td><td>Gratis limitado</td></tr>
+              <tr><td><strong>Mapbox</strong></td><td>Mapa, geocoder, directions, tráfico</td><td>Token público</td></tr>
+              <tr><td><strong>NewsData.io</strong></td><td>Noticias en sidebar y panel de emergencias</td><td>Gratis limitado</td></tr>
+              <tr><td><strong>OpenRouter</strong></td><td>Asistente IA para lugares y rutas</td><td>Gratis limitado</td></tr>
+              <tr><td><strong>n8n</strong></td><td>Orquestación de rutas inteligentes (webhook)</td><td>Self-hosted</td></tr>
+              <tr><td><strong>Google Trends</strong></td><td>Tendencias turísticas (<code>fetch-trends.py</code>)</td><td>Sin key</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          Archivos en <code>data/</code>: <code>tourism-official.geojson</code>, <code>pois.geojson</code>,
+          <code>crowds.geojson</code>, <code>biodiversity.geojson</code>, <code>birds.geojson</code>,
+          <code>nature-curated.geojson</code>, <code>weather.json</code>, <code>departments.geojson</code>,
+          <code>mask.geojson</code>, entre otros — todos regenerables con scripts documentados.
+        </p>
+      </section>
+
+      <section id="stack">
+        <h2>Stack tecnológico</h2>
+        <ul>
+          <li><strong>Frontend:</strong> HTML5, CSS3, JavaScript vanilla modular (20+ módulos en <code>frontend/src/js/</code>); sin framework ni build step.</li>
+          <li><strong>Mapas:</strong> Mapbox GL JS v3.17, estilo <code>satellite-streets-v12</code>, geocoder v5, capas vectoriales de tráfico, edificios 3D con <code>fill-extrusion</code>.</li>
+          <li><strong>Backend:</strong> Node.js, Express 5, ES modules, axios, dotenv.</li>
+          <li><strong>Scripts de datos:</strong> Node (<code>.mjs</code>) y Python (<code>pytrends</code>) para regenerar cachés.</li>
+          <li><strong>Persistencia:</strong> localStorage por perfil (<code>TwinmapPlaceStorage</code>), GeoJSON/JSON estáticos servidos por Express.</li>
+          <li><strong>Integración app ↔ mapa:</strong> iframe + <code>postMessage</code> para capas, favoritos y bitácora.</li>
+        </ul>
+      </section>
+
+      <section id="piloto">
+        <h2>Caso piloto y cobertura nacional</h2>
+        <p>
+          El gemelo digital se diseñó con foco en <strong>Barra de Santiago</strong> (humedal RAMSAR, manglar,
+          ecoturismo comunitario, aves migratorias y tortugas) — centro del mapa en
+          <code>lat 13.74, lng -90.05</code>. La capa de biodiversidad y naturaleza curada reflejan
+          este ecosistema costero.
+        </p>
+        <p>
+          Simultáneamente, la integración del <strong>catálogo MITUR</strong> eleva la plataforma a escala
+          nacional: <strong>104 destinos oficiales</strong> distribuidos en <strong>13 departamentos</strong>
+          y <strong>26 categorías</strong> (playas, volcanes, cascadas, sitios arqueológicos, gastronomía, etc.),
+          con heatmap de afluencia ponderado por pesos turísticos institucionales.
+        </p>
+      </section>
+
+      <section id="despliegue">
+        <h2>Despliegue</h2>
+        <div class="grid-2">
+          <div class="feature-card">
+            <h4>Frontend — Vercel</h4>
+            <p>
+              Sitio estático desplegado en
+              <a href="https://mirus-blue.vercel.app"><strong>mirus-blue.vercel.app</strong></a>.
+              Build con <code>scripts/netlify-config.mjs</code> que genera <code>config.js</code> desde
+              variables <code>MAPBOX_TOKEN</code> y <code>API_BASE</code>. Rewrites: <code>/</code> → app Mirus,
+              <code>/map</code> → gemelo standalone.
+            </p>
+          </div>
+          <div class="feature-card">
+            <h4>Backend — Railway / Render</h4>
+            <p>
+              API Express en puerto configurable (<code>PORT</code>). Railway puede servir frontend + API
+              desde el mismo proceso. Alternativas: Render, VPS propio. Variables en <code>.env</code>
+              (Mapbox, SerpAPI, eBird, OpenRouter, NewsData, n8n webhook).
+            </p>
+          </div>
+        </div>
+        <p>
+          Desarrollo local: <code>npx serve -l 3000 .</code> (estático) + <code>npm run dev</code> (API :3001).
+          La UI degrada gracefully si el backend no está disponible.
+        </p>
+      </section>
+
+      <section id="logros">
+        <h2>Logros del hackathon y diferenciadores</h2>
+        <ul class="status-list">
+          <li><span class="dot dot--done"></span><span><strong>Gemelo cartográfico funcional</strong> con más de 10 capas activables, terreno 3D y sidebar contextual integrado en la app.</span></li>
+          <li><span class="dot dot--done"></span><span><strong>Catálogo MITUR completo</strong> (104 lugares) con filtros por categoría, heatmap mejorado y símbolos diferenciados.</span></li>
+          <li><span class="dot dot--done"></span><span><strong>Dos experiencias de usuario</strong> (modo ruta planificador + modo aventura gamificado) en una sola codebase.</span></li>
+          <li><span class="dot dot--done"></span><span><strong>Integración app ↔ mapa</strong> vía iframe y <code>postMessage</code>: favoritos, visitas y capas sincronizados por perfil.</span></li>
+          <li><span class="dot dot--done"></span><span><strong>Movilidad local</strong>: enlaces directos a Waze e inDrive desde el sidebar de cada lugar.</span></li>
+          <li><span class="dot dot--done"></span><span><strong>Noticias y emergencias</strong> con NewsData.io en vivo, fallback a Google Noticias y contactos oficiales de El Salvador.</span></li>
+          <li><span class="dot dot--done"></span><span><strong>Login Google</strong> además de perfiles locales; bitácora y favoritos editables.</span></li>
+          <li><span class="dot dot--done"></span><span><strong>Backend modular</strong> con 7 routers, cachés GeoJSON versionados y degradación a mocks.</span></li>
+          <li><span class="dot dot--done"></span><span><strong>Demo pública desplegada</strong> en Vercel, lista para evaluación de jurado.</span></li>
+          <li><span class="dot dot--done"></span><span><strong>Enfoque low twin creíble</strong>: datos abiertos + simulación explicable, sin prometer IoT inexistente.</span></li>
+        </ul>
+      </section>
+
+      <section id="estado">
+        <h2>Estado actual: completado vs. parcial</h2>
+        <h3>Completado y demostrable</h3>
+        <ul>
+          <li>Flujo completo landing → login → quiz → navegación en ambos modos.</li>
+          <li>Mapa Mapbox embebido con MITUR, heatmap, POIs, tráfico y biodiversidad.</li>
+          <li>Sidebar de lugar con clima, IA, Waze/inDrive y noticias.</li>
+          <li>Itinerarios, favoritos editables, bitácora ampliada, emergencias.</li>
+          <li>Backend Express con todos los endpoints documentados y cachés en <code>data/</code>.</li>
+          <li>Deploy frontend en Vercel; scripts de build de configuración.</li>
+        </ul>
+        <h3>Parcial o dependiente de llaves</h3>
+        <ul>
+          <li>SerpAPI, eBird, OpenRouter, NewsData.io: implementados; requieren <code>.env</code> válido en producción.</li>
+          <li>Webhook n8n para rutas inteligentes: configurado con fallback Mapbox Directions.</li>
+          <li>Asistente IA: enriquece descripciones; no es el motor principal de recomendación.</li>
+          <li>Sincronización en nube de bitácora/favoritos: pendiente (hoy localStorage por perfil).</li>
+        </ul>
+      </section>
+
+      <section id="roadmap">
+        <h2>Roadmap pendiente</h2>
+        <ul class="status-list">
+          <li><span class="dot dot--todo"></span><span>Dashboard de signos vitales visible en embed (clima cacheado listo; mareas StormGlass pendiente).</span></li>
+          <li><span class="dot dot--todo"></span><span>Flujo n8n completo: 3 rutas simultáneas (Tranquila / Gastronómica / Rápida) con explicación LLM.</span></li>
+          <li><span class="dot dot--todo"></span><span>Predicción de afluencia con tendencias (<code>fetch-trends.py</code>) + razonamiento LLM.</span></li>
+          <li><span class="dot dot--todo"></span><span>Autenticación en nube y backup de rutas, favoritos y bitácoras.</span></li>
+          <li><span class="dot dot--todo"></span><span>Restringir token Mapbox por URL en producción; CI/CD con pruebas de humo.</span></li>
+          <li><span class="dot dot--todo"></span><span>Capas oceánicas (OBIS) y datos Movebank para migración de especies.</span></li>
+        </ul>
+      </section>
+
+      <section id="equipo">
+        <h2>Colaboración y evidencia de prueba</h2>
+        <p>
+          Desarrollo en frentes complementarios dentro del mismo repositorio: experiencia Mirus
+          (frontend, UX dual, emergencias, perfiles) y gemelo/backend (Express, cachés GeoJSON,
+          integraciones API, <code>index.html</code> del mapa). La división permite demo con datos
+          reales cuando el backend está activo y presentación offline con mocks.
+        </p>
+        <p><strong>Pruebas internas realizadas (julio 2026):</strong></p>
+        <ul>
+          <li>Arranque local: API :3001 + servidor estático; verificación de <code>/health</code> y CORS.</li>
+          <li>Flujo quiz → mapa embebido → popup con clima → añadir paradas → badge Mi ruta.</li>
+          <li>Capas MITUR + heatmap + toggles; sidebar Waze/inDrive y noticias.</li>
+          <li>Modo aventura: generar/regenerar ruta, logros, impresión.</li>
+          <li>Degradación: frontend usable sin backend (mocks y catálogo embebido).</li>
+          <li>Deploy Vercel verificado; merge integrado en <code>main</code>.</li>
+        </ul>
+      </section>
+
+      <footer>
+        Mirus (TwinMap) · Resumen ejecutivo · Hackathon TWINMAP · Julio 2026<br />
+        Equipo TwinMap · El Salvador
+      </footer>
+    </div>
+  </body>
+</html>
