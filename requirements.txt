@@ -1,0 +1,2 @@
+# Dependencia opcional para scripts/fetch-trends.py
+pytrends>=4.9.2,<5

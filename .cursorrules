@@ -1,0 +1,97 @@
+# TwinMap · Digital Twin Turístico — Guía para Cursor AI
+
+Prototipo de gemelo digital turístico (hackathon TWINMAP). Caso piloto: **Barra de Santiago, El Salvador** (centro: `lat 13.74, lng -90.05`). Enfoque "low twin": sin IoT ni ML; datos abiertos + simulación con reglas realistas.
+
+## Orden de trabajo (respétalo)
+
+1. `config.js` — token Mapbox (`pk...`). **NO se sube a git**; usar `config.example.js` como plantilla.
+2. `index.html` — **95% del código**: mapa, capas, rutas, UI. Un solo archivo, sin build ni framework.
+3. `scripts/` — solo para regenerar cache de datos (Node, `.mjs`). No corren en producción.
+4. `data/*.geojson` — cache generado por scripts. **No editar a mano** salvo emergencia.
+
+## Stack
+
+| Área | Tecnología |
+|------|------------|
+| Mapa | Mapbox GL JS **v3.17.0**, estilo `satellite-streets-v12` |
+| Buscador | `mapbox-gl-geocoder` v5.0.3 |
+| Rutas | Mapbox Directions API |
+| POIs | Overpass → cache en `data/pois.geojson` |
+| Límites | geoBoundaries → `data/departments.geojson`, `data/mask.geojson` |
+
+Token único de Mapbox en `config.js` cubre mapa + geocoder + directions.
+
+## Estructura de `index.html`
+
+Todo vive en `boot()` → `map.on("style.load")`. Secciones marcadas con comentarios:
+
+```
+// ============ CAPA: Edificios 3D ============
+// ============ MODO ISLA: máscara... ============
+// ============ CAPA: Departamentos... ============
+// ============ CAPA: POIs... ============
+// ============ CAPA: Ocupación simulada... ============
+// ============ CAPA: Biodiversidad... ============
+// ============ MOTOR DE RUTAS INTELIGENTES ============
+// ============ Toggles del panel ============
+```
+
+Hooks de depuración: `window._twinmap` (mapa), `window._geocoder`.
+
+## Reglas al editar
+
+- **Cambios de UI/mapa/capas/rutas → solo `index.html`.** No crear React, Vite, ni dividir en módulos sin que el usuario lo pida.
+- **Datos nuevos o refresh → `scripts/fetch-*.mjs`**, luego commitear el GeoJSON resultante en `data/`.
+- **No commitear `config.js`** (está en `.gitignore`).
+- Mantener CSS en el `<style>` del HTML y JS inline; seguir convenciones existentes (nombres de capas, IDs de DOM, variables CSS en `:root`).
+- Respuestas y comentarios de código en **español** (el proyecto está en español).
+
+## Correr en local
+
+```bash
+npx serve -l 3000 .
+# → http://localhost:3000
+```
+
+**No abrir `index.html` con `file://`** — los `fetch` a GeoJSON fallan por CORS.
+
+Regenerar datos (opcional):
+```bash
+node scripts/fetch-pois.mjs
+node scripts/fetch-departments.mjs
+node scripts/fetch-mask.mjs
+```
+
+## Gotchas (no repetir estos errores)
+
+1. **Estilo Mapbox "Standard/standard-satellite" NO funciona** — `style.load` nunca dispara. Usar `satellite-streets-v12` + edificios 3D manuales con `fill-extrusion`.
+2. **Overpass HTTP 406** sin `User-Agent` propio → ver `scripts/fetch-pois.mjs`.
+3. **Máscara isla** — contorno de El Salvador tiene ~11k puntos; earcut falla. `fetch-mask.mjs` simplifica con Douglas-Peucker (~313 pts).
+4. **Barra de Santiago es rural** — casi sin edificios 3D; el 3D real ahí es el terreno.
+5. **`addBiodiversity()` está hardcoded** (3 puntos placeholder). Reemplazar con GBIF/eBird cuando se implemente.
+6. **Screenshots WebGL en paneles internos de browser automation** pueden fallar; verificar con `isStyleLoaded()`, `getLayer()`, `getSource()`.
+
+## Flujo de datos
+
+```
+scripts/*.mjs  ──(fetch APIs, una vez)──▶  data/*.geojson  ──(fetch local)──▶  index.html
+```
+
+El deploy sirve GeoJSON estático → carga rápida, sin depender de APIs en vivo.
+
+## Roadmap pendiente (contexto, no implementar sin pedirlo)
+
+- 3 rutas simultáneas (Tranquila / Gastronómica / Rápida) con scoring distinto
+- Explicación de rutas vía OpenRouter (LLM)
+- Dashboard signos vitales: Open-Meteo (clima) + StormGlass (marea)
+- Biodiversidad real: GBIF / eBird
+- Predicción de afluencia: Firecrawl + LLM
+- Deploy Vercel + restringir token Mapbox por URL
+
+## APIs sin key (listas)
+
+Overpass, geoBoundaries, Open-Meteo, GBIF. Keys gratis pendientes: StormGlass, eBird, OpenRouter.
+
+## Referencia extendida
+
+Para detalle completo del proyecto, leer `CLAUDE.md` en la raíz.

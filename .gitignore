@@ -1,4 +1,8 @@
-﻿node_modules/
+﻿config.js
 .env
 .env.*
+node_modules/
+.DS_Store
 backend/
+backend.out.log
+backend.err.log
