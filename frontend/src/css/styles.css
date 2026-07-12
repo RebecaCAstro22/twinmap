@@ -162,6 +162,26 @@ body.has-topbar main {
   display: block;
 }
 
+.landing-view {
+  padding-top: 0;
+}
+
+.landing-hero-image {
+  overflow: hidden;
+  width: calc(100% + 56px);
+  max-height: min(40vw, 520px);
+  margin: 0 -28px 28px;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.landing-hero-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-position: center top;
+}
+
 .mode-select-view {
   display: none;
   min-height: 100vh;
@@ -1478,13 +1498,13 @@ body.has-place-popup {
 
   .recommendation-grid,
   .frontend-placeholders,
+  .landing-details,
   .stats-row,
   .mode-grid,
   .bitacora-logros-grid,
   .bitacora-places-grid,
   .bitacora-gallery-grid,
-  .favoritos-grid,
-  .landing-details {
+  .favoritos-grid {
     grid-template-columns: 1fr;
   }
 
@@ -1548,4 +1568,5 @@ body:not(.has-topbar) .topbar {
 body:not(.has-topbar) main {
   min-height: 100vh;
 }
+
 
