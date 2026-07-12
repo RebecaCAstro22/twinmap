@@ -106,10 +106,28 @@ main {
   display: block;
 }
 
+.landing-view {
+  padding-top: 0;
+}
+
+.landing-hero-image {
+  overflow: hidden;
+  width: calc(100% + 56px);
+  margin: -28px -28px 28px;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.landing-hero-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 .landing-frame {
   display: grid;
   grid-template-columns: minmax(280px, 0.8fr) minmax(320px, 1.2fr);
-  min-height: 560px;
+  min-height: 360px;
   border-bottom: 1px solid var(--line);
 }
 
@@ -153,88 +171,36 @@ h1 {
   margin-top: 24px;
 }
 
-.hero-visual {
-  position: relative;
-  overflow: hidden;
-  min-height: 520px;
+.landing-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  align-content: center;
+  padding: 48px 0 48px 28px;
   border-left: 1px solid var(--line);
-  background:
-    linear-gradient(var(--surface-soft), var(--surface-soft)) padding-box,
-    repeating-linear-gradient(0deg, transparent, transparent 31px, #e7e7e7 32px),
-    repeating-linear-gradient(90deg, transparent, transparent 31px, #e7e7e7 32px);
 }
 
-.mountain,
-.trail,
-.floating-label {
-  position: absolute;
+.landing-summary article {
+  min-height: 140px;
+  padding: 16px;
   border: 1px solid var(--line);
-}
-
-.mountain {
-  bottom: 0;
-  width: 46%;
-  height: 42%;
-  transform: rotate(45deg);
-  border-radius: 4px;
-  background: var(--surface);
-}
-
-.mountain-left {
-  left: 4%;
-  bottom: -22%;
-}
-
-.mountain-center {
-  left: 34%;
-  bottom: -16%;
-  height: 52%;
-}
-
-.mountain-right {
-  right: -5%;
-  bottom: -18%;
-  height: 48%;
-}
-
-.trail {
-  width: 44%;
-  height: 1px;
-  border-width: 1px 0 0;
-  border-style: dashed;
-  transform: rotate(-12deg);
-}
-
-.trail-one {
-  top: 40%;
-  left: 26%;
-}
-
-.trail-two {
-  top: 50%;
-  left: 38%;
-  transform: rotate(18deg);
-}
-
-.floating-label {
-  padding: 8px 12px;
   border-radius: 6px;
   background: var(--surface);
 }
 
-.label-one {
-  right: 9%;
-  bottom: 17%;
+.landing-summary strong,
+.landing-summary span {
+  display: block;
 }
 
-.label-two {
-  left: 48%;
-  top: 26%;
+.landing-summary strong {
+  margin-bottom: 12px;
+  font-size: 20px;
 }
 
-.label-three {
-  left: 12%;
-  top: 14%;
+.landing-summary span {
+  color: var(--muted);
+  line-height: 1.45;
 }
 
 .frontend-placeholders {
@@ -704,7 +670,9 @@ h1 {
     padding-right: 0;
   }
 
-  .hero-visual {
+  .landing-summary {
+    grid-template-columns: 1fr;
+    padding-left: 0;
     border-left: 0;
     border-top: 1px solid var(--line);
   }
@@ -730,6 +698,11 @@ h1 {
   .topbar,
   .view {
     padding-inline: 16px;
+  }
+
+  .landing-hero-image {
+    width: calc(100% + 32px);
+    margin-inline: -16px;
   }
 
   .nav-link {
