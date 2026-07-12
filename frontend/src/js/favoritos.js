@@ -1,9 +1,9 @@
-const FAVORITOS_STORAGE_KEY = "twinmap-favoritos";
+﻿const FAVORITOS_STORAGE_KEY = "twinmap-favoritos";
 
 const FAVORITOS_CATEGORIES = [
   { id: "todos", label: "Todos" },
   { id: "restaurante", label: "Restaurantes" },
-  { id: "arqueologico", label: "Arqueológicos" },
+  { id: "arqueologico", label: "ArqueolÃ³gicos" },
   { id: "playa", label: "Playas" },
   { id: "naturaleza", label: "Naturaleza" },
   { id: "ciudad", label: "Ciudad" },
@@ -12,7 +12,7 @@ const FAVORITOS_CATEGORIES = [
 const FAVORITOS_MOCK = [
   {
     id: "pupuseria-la-ceiba",
-    name: "Pupusería La Ceiba",
+    name: "PupuserÃ­a La Ceiba",
     category: "restaurante",
     categoryLabel: "Restaurante",
     location: "San Salvador",
@@ -21,7 +21,7 @@ const FAVORITOS_MOCK = [
     id: "tazumal",
     name: "Tazumal",
     category: "arqueologico",
-    categoryLabel: "Arqueológico",
+    categoryLabel: "ArqueolÃ³gico",
     location: "Chalchuapa, Santa Ana",
   },
   {
@@ -33,9 +33,9 @@ const FAVORITOS_MOCK = [
   },
   {
     id: "joya-de-ceren",
-    name: "Joya de Cerén",
+    name: "Joya de CerÃ©n",
     category: "arqueologico",
-    categoryLabel: "Arqueológico",
+    categoryLabel: "ArqueolÃ³gico",
     location: "San Juan Opico",
   },
   {
@@ -47,7 +47,7 @@ const FAVORITOS_MOCK = [
   },
   {
     id: "centro-suchitoto",
-    name: "Centro histórico de Suchitoto",
+    name: "Centro histÃ³rico de Suchitoto",
     category: "ciudad",
     categoryLabel: "Ciudad",
     location: "Suchitoto",
@@ -130,13 +130,13 @@ function renderFavoritos() {
 
   if (favoritos.length === 0) {
     listEl.innerHTML =
-      '<p class="favoritos-empty">Aún no tienes favoritos. Guarda lugares desde el mapa.</p>';
+      '<p class="favoritos-empty">AÃºn no tienes favoritos. Guarda lugares desde el mapa.</p>';
     return;
   }
 
   if (places.length === 0) {
     listEl.innerHTML =
-      '<p class="favoritos-empty">No hay lugares en esta categoría.</p>';
+      '<p class="favoritos-empty">No hay lugares en esta categorÃ­a.</p>';
     return;
   }
 
@@ -178,3 +178,4 @@ function initFavoritos() {
 }
 
 initFavoritos();
+

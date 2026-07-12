@@ -149,7 +149,9 @@ viewButtons.forEach((button) => {
     event.preventDefault();
 
     if (button.dataset.view === "mode-select") {
-      returnToModeSelect();
+      setActiveMode(null);
+      document.body.classList.remove("is-onboarding");
+      showView("mode-select");
       return;
     }
 
@@ -178,4 +180,6 @@ document.querySelectorAll(".map-search").forEach((form) => {
 });
 
 showView("landing");
+
+
 
